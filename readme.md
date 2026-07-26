@@ -18,9 +18,9 @@ Ett Python-verktyg för att automatiskt sammanställa och jämföra stämplade f
 
 Startas via `./main/compare_times.py`, eller dra och släpp dina filer på py-ikonen direkt i Utforskaren. Skriptet installerar saknade paket automatiskt vid start.
 
-### För en virtual python-miljlö (venv):
-Using your preferred text editor, edit 'run_in_virtual_env.bat', to point to the python executable in your .venv folder.
-```"c:\Users\PCMasterRace\Documents\GitHub\venv\Scripts\python.exe"```
+### For a virtual python-environment (venv):
+Open 'run_in_virtual_env.bat' with your preferred text editor. Change path to point to the python executable in your .venv folder.
+Example:``"c:\Users\PCMasterRace\Documents\GitHub\venv\Scripts\python.exe"``
 
 Use that batch file to launch the script, or to drop your files into. This will also install dependencies in that virtual environment.
 
