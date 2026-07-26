@@ -1,0 +1,10 @@
+# entire folders 
+.old/
+/data/
+/input_data/
+/output_data/
+/complete_functions/
+
+# specific files 
+/main/run.bat
+/notes.md
