@@ -16,7 +16,7 @@ Ett Python-verktyg för att automatiskt sammanställa och jämföra stämplade f
 
 ### Alternativ 1: Direkt körning (Rekommenderat)
 
-Startas via .py-filen, eller dra och släpp dina filer direkt ifrån Utforskaren. Skriptet installerar saknade paket automatiskt vid start.
+Startas via `./main/compare_times.py`, eller dra och släpp dina filer på py-ikonen direkt i Utforskaren. Skriptet installerar saknade paket automatiskt vid start.
 
 ### För en virtual python-miljlö (venv):
 Using your preferred text editor, edit 'run_in_virtual_env.bat', to point to the python executable in your .venv folder.
@@ -30,7 +30,7 @@ Use that batch file to launch the script, or to drop your files into. This will 
 
 It will process any excel or csv file, identify EAM project time by the key "AO-aktivitet" or "EAM" in the file (or sheet) name. Any other file(s) will be attributed using employee number or name. It can be separate files or a single Excel using multiple sheets.
 
-When parsing the raw data it will create separate CSV files in ```.\temp_data``` (which is cleared at script start). Using the identiefied "EAM" file as a database, it will iterate the remaining files, try to match file name, with existing person and dates in the database. If match is unsuccessful, user is asked to input employee number or name (file name and preview of the first 5 lines is shown).
+When parsing the raw data it will create separate CSV files in ```.\temp_data``` (which is cleared at script start). Using the identiefied "EAM" file as a database, it will iterate the remaining files to match a file name, with existing person and dates in the database. If match is unsuccessful, user is asked to input employee number or name (file name and preview of the first 5 lines is shown). In the case of conflicting but valid name and number, number will take precedent. 
 
 Output is saved to ```.\output_data\<employee_name>```, this isn't deleted but will be overwritten. Take care when employees have identical names.
 

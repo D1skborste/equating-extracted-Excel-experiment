@@ -7,4 +7,6 @@
 
 # specific files 
 /main/run.bat
+/main/output_data/*
+/main/temp_data/*
 /notes.md
