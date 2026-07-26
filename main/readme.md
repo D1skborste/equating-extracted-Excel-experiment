@@ -46,7 +46,7 @@ Output is saved to ```.\output_data\<employee_name>```, this isn't deleted but w
 - There is some generic example data to test the functions. All identifiable information is fictional and do not represent a real person. Any correlation to such a person is purely coincidental.
 - Can be used as Excel-to-CSV converter, for processing batches of files. Just abort the script when asked for employee info. The output to temp_data isn't deleted until the script is restarted.
 ---
-- **The rest is AI bullshit**
+- **Text below is AI bullshit**
 - **Automatiskt filval (GUI / Drag & Drop):** Välj `.csv`, `.xlsx` eller `.xls`-filer via ett grafiskt gränssnitt eller genom att skicka med dem som argument.
 - **Automatisk medarbetarmatchning:** Identifierar medarbetare baserat på 4-siffrigt anställningsnummer eller namn i filnamnet.
 - **Interaktiv CLI-hantering:** Om en fil inte kan matchas automatiskt visas de första raderna ur filen och du kan ange namn/ID manuellt (eller hoppa över filen med `Enter`).
