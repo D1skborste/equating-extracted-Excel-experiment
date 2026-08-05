@@ -8,8 +8,8 @@ With notepad, edit "run_excel_backup.bat" to point to python.exe (probably just 
 In EAM, view preview > top right pdf icon > View in Excel Options > View in Excel 2007 Format > Save
 In Personec, Tidutvärdering > Select All > Paste in Excel > Save as employee name or number
 
-If drag & drop the excel files onto the bat file. The output will be created in the same folder of the original files.
-Or run by the .bat file, output is created in the same folder as the .bat file.
+If drag & drop the excel files onto the "run_excel_backup.bat" file. The output will be created in the same folder of the original files.
+Or run by the "run_excel_backup.bat", output is created in the same folder as the .bat file.
 
 Final output is both xlsx and csv format. Use the xlsx to sum all times columns.
 
