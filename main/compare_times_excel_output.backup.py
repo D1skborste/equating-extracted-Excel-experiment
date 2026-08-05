@@ -66,6 +66,20 @@ def skip_to_header(file_path: Path) -> pd.DataFrame | None:
             df.rename(columns={df.columns[1]: "Namn"}, inplace=True)
         df = df.loc[:, ~(df.columns.str.contains(r"^Unnamed:") & df.isna().all())]
         df = df.dropna(how="all").reset_index(drop=True)
+        
+        # Drop useless trailing/leading empty columns caused by stray commas
+        valid_cols = []
+        for col in df.columns:
+            df[col] = df[col].astype(str).str.replace('\xa0', ' ').str.strip()
+
+            if col.startswith("Unnamed:") or col == "nan" or col == "":
+                has_data = df[col].dropna().astype(str).str.strip().ne("").any()
+                if has_data:
+                    valid_cols.append(col)
+            else:
+                valid_cols.append(col)
+        df = df[valid_cols]
+        
         return df
 
     except Exception as e:
