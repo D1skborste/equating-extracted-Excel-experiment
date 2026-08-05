@@ -1,15 +1,13 @@
 ## Till Robin,
 
-Det verkar funka tillräckligt för att kunna köras, genom att följa stegen noggrant, men är inte stabilt eller bra nog för "publik" användning.  
+Det verkar funka tillräckligt för att kunna köras, genom att följa stegen noggrant, men är inte stabilt eller bra nog för "publik" användning.
 Dra ner hela repot som en zip fil. Unzippa på något bra ställe. Följ instruktionerna nedan.
 
-With notepad, edit "run_excel_backup.bat" to point to python.exe (probably just edit the dashes after 'ROAU' in C:\Users\ROAU____\AppData\Local\Python\bin\python.exe)
+With notepad, edit "run.bat" to point to python.exe (probably just edit the dashes after 'ROAU' in C:\Users\ROAU____\AppData\Local\Python\bin\python.exe)
 
-In EAM, view preview > top right pdf icon > View in Excel Options > View in Excel 2007 Format > Save
-In Personec, Tidutvärdering > Select All > Paste in Excel > Save as employee name or number
+In EAM, view preview > top right pdf icon > View in Excel Options > View in Excel 2007 Format > Save In Personec, Tidutvärdering > Select All > Paste in Excel > Save as employee name or number
 
-If drag & drop the excel files onto the "run_excel_backup.bat" file. The output will be created in the same folder of the original files.
-Or run by the "run_excel_backup.bat", output is created in the same folder as the .bat file.
+If drag & drop the excel files onto the "run.bat" file. The output will be created in the same folder of the original files. Or run by the "run.bat", output is created in the same folder as the .bat file.
 
 Final output is both xlsx and csv format. Use the xlsx to sum all times columns.
 
