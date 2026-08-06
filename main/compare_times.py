@@ -241,7 +241,8 @@ def compare_employee_times(dept_df: pd.DataFrame, flex_df: pd.DataFrame, file_pa
     emp_name = person_dept_df["Namn"].dropna().iloc[0]
 
     # Outer merge to keep all recorded days
-    comparison_df = pd.merge(person_dept_df[["Datum", "Arbetade timmar"]], flex_df, on="Datum", how="outer")
+#    comparison_df = pd.merge(person_dept_df[["Datum", "Arbetade timmar"]], flex_df, on="Datum", how="outer")
+    comparison_df = pd.merge(person_dept_df[["Datum", "Arbetade timmar"]], flex_df, on="Datum", how="inner")
     
     comparison_df["Medarbetare"] = emp_id
     comparison_df["Namn"] = emp_name
