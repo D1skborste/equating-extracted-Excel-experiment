@@ -1,4 +1,20 @@
 ==================================================
+Notes
+--------------------------------------------------
+Install python, make sure to add python to PATH. If compare_times.py is crashing, unable to find PATH, read below:
+
+With notepad, edit "run.bat" to point to python.exe (probably just edit 'PCMasterRace', to your username in C:\Users\PCMasterRace\AppData\Local\Python\bin\python.exe)
+
+In EAM, view preview > top right pdf icon > View in Excel Options > View in Excel 2007 Format > Save In Personec, Tidutvärdering > Select All > Paste in Excel > Save as employee name or number. These can be saved as separate files or sheets.
+
+If drag & drop the excel files onto the "run.bat" file. The output will be created in the same folder of the original files. Or run by the "run.bat", output is created in the same folder as the .bat file.
+
+Final output is both xlsx and csv format. Use the xlsx to sum all times columns.
+
+week-month-tables.ts is an excel macro to sum all week times.
+--------------------------------------------------
+
+==================================================
 Tidjämförelse (EAM vs. Time manager)
 ==================================================
 
