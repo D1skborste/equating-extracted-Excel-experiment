@@ -15,6 +15,7 @@ def install_and_import(package, import_name=None):
 install_and_import("pandas")
 install_and_import("openpyxl")
 
+import os
 import re
 from pathlib import Path
 from tkinter import Tk, filedialog
@@ -301,6 +302,46 @@ def parse_temp_files(temp_dir: Path = Path("./temp_data"), output_dir: Path = Pa
         else:
             print(f" Hoppade över fil: {file_path.name}")
 
+def combine_outputs(output_dir: Path = Path("./output_data")):
+    """Combines all individual comparison files into a single master file."""
+    all_files = list(output_dir.glob("*_jämförelse.csv"))
+    
+    if not all_files:
+        print(" [INFO] No comparison files found to combine.")
+        return
+
+    # Read and concatenate all CSVs
+    df_list = [pd.read_csv(file, dtype=str) for file in all_files]
+    combined_df = pd.concat(df_list, ignore_index=True)
+
+    # Convert numeric columns back to proper types if needed
+    numeric_cols = ["EAM", "Stämplad Tid", "Diff"]
+    for col in numeric_cols:
+        if col in combined_df.columns:
+            combined_df[col] = pd.to_numeric(combined_df[col], errors="coerce").round(2)
+
+    # Save as Master CSV
+    combined_csv_path = output_dir / "combined_output.csv"
+    combined_df.to_csv(combined_csv_path, index=False, float_format="%.2f", encoding="utf-8-sig")
+
+    # Save as Master Excel
+    combined_xlsx_path = output_dir / "combined_output.xlsx"
+    excel_df = combined_df.copy()
+    if "Datum" in excel_df.columns:
+        excel_df["Datum"] = pd.to_datetime(excel_df["Datum"], errors="coerce").dt.date
+
+    with pd.ExcelWriter(combined_xlsx_path, engine="openpyxl") as writer:
+        excel_df.to_excel(writer, index=False, sheet_name="Combined_Output")
+        worksheet = writer.sheets["Combined_Output"]
+        
+        # Auto-adjust column widths
+        for col in worksheet.columns:
+            max_len = max(len(str(cell.value or '')) for cell in col)
+            col_letter = col[0].column_letter
+            worksheet.column_dimensions[col_letter].width = max(max_len + 3, 12)
+
+    print(f"\n Kombinerad output sparad till: {combined_xlsx_path}")
+
 
 def main():
     if len(sys.argv) > 1:
@@ -311,10 +352,12 @@ def main():
     clear_temp_data()
     process_files(files)
     parse_temp_files()
-    
+    combine_outputs()
+
     print("\n" + "=" * 60)
     print(" All operations failed successfully!")
     print("=" * 60)
+    os.system ('pause')
 
 if __name__ == "__main__":
     main()
