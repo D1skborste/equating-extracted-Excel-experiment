@@ -8,7 +8,9 @@ In EAM, view preview > top right pdf icon > View in Excel Options > View in Exce
 
 If drag & drop the excel files onto the "run.bat" file. The output will be created in the same folder of the original files. Or run by the "run.bat", output is created in the same folder as the .bat file.
 
-Final output is both xlsx and csv format. Use the xlsx to sum all times columns.
+Final output is both xlsx and csv format. Use the xlsx to sum all times columns. 
+
+week-month-tables.ts is an excel macro to sum all week times.
 
 ---
 
