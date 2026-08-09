@@ -15,6 +15,7 @@ def install_and_import(package, import_name=None):
 install_and_import("pandas")
 install_and_import("openpyxl")
 
+import msvcrt
 import os
 import re
 from pathlib import Path
@@ -249,12 +250,12 @@ def compare_employee_times(dept_df: pd.DataFrame, flex_df: pd.DataFrame, file_pa
     comparison_df["Namn"] = emp_name
     comparison_df["Arbetade timmar"] = comparison_df["Arbetade timmar"].fillna(0)
     comparison_df["Total_Flex"] = comparison_df["Total_Flex"].fillna(0)
-    comparison_df["Diff"] = comparison_df["Arbetade timmar"] - comparison_df["Total_Flex"]
+    comparison_df["Diff (P-E)"] = comparison_df["Total_Flex"] - comparison_df["Arbetade timmar"]
 
     comparison_df.sort_values("Datum", inplace=True)
-    comparison_df.rename(columns={"Arbetade timmar": "EAM", "Total_Flex": "Stämplad Tid"}, inplace=True)
+    comparison_df.rename(columns={"Arbetade timmar": "EAM", "Total_Flex": "Personec"}, inplace=True)
 
-    cols = ["Medarbetare", "Namn", "Datum", "EAM", "Stämplad Tid", "Diff"]
+    cols = ["Medarbetare", "Namn", "Datum", "Personec", "EAM", "Diff (P-E)"]
     comparison_df = comparison_df[cols]
 
     return comparison_df, emp_name
@@ -280,7 +281,7 @@ def parse_temp_files(temp_dir: Path = Path("./temp_data"), output_dir: Path = Pa
             result_df, emp_name = result
             new_emp_name = str(emp_name).replace(" ", "_").replace("/", "_")
             
-            numeric_cols = ["EAM", "Stämplad Tid", "Diff"]
+            numeric_cols = ["Personec", "EAM", "Diff (P-E)"]
             for col in numeric_cols:
                 result_df[col] = pd.to_numeric(result_df[col], errors="coerce").round(2)
                     
@@ -315,7 +316,7 @@ def combine_outputs(output_dir: Path = Path("./output_data")):
     combined_df = pd.concat(df_list, ignore_index=True)
 
     # Convert numeric columns back to proper types if needed
-    numeric_cols = ["EAM", "Stämplad Tid", "Diff"]
+    numeric_cols = ["Personec", "EAM", "Diff (P-E)"]
     for col in numeric_cols:
         if col in combined_df.columns:
             combined_df[col] = pd.to_numeric(combined_df[col], errors="coerce").round(2)
@@ -340,7 +341,7 @@ def combine_outputs(output_dir: Path = Path("./output_data")):
             col_letter = col[0].column_letter
             worksheet.column_dimensions[col_letter].width = max(max_len + 3, 12)
 
-    print(f"\n Kombinerad output sparad till: {combined_xlsx_path}")
+    print(f"\n Sparat kombinerad output till: {combined_xlsx_path}")
 
 
 def main():
@@ -357,7 +358,12 @@ def main():
     print("\n" + "=" * 60)
     print(" All operations failed successfully!")
     print("=" * 60)
-    os.system ('pause')
+    
+    is_batch = os.getenv("LAUNCH_METHOD") == "batch"
+    if not is_batch:
+        print("Press any key to exit . . . ", end='', flush=True)
+        msvcrt.getch()
+
 
 if __name__ == "__main__":
     main()

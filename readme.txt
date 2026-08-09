@@ -3,6 +3,8 @@ Notes
 --------------------------------------------------
 Install python, make sure to add python to PATH. If compare_times.py is crashing, unable to find PATH, read below:
 
+Or just reinstall python, making sure to check 'add python to $PATH'.
+
 With notepad, edit "run.bat" to point to python.exe (probably just edit 'PCMasterRace', to your username in C:\Users\PCMasterRace\AppData\Local\Python\bin\python.exe)
 
 In EAM, view preview > top right pdf icon > View in Excel Options > View in Excel 2007 Format > Save In Personec, Tidutvärdering > Select All > Paste in Excel > Save as employee name or number. These can be saved as separate files or sheets.
