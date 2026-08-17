@@ -19,14 +19,20 @@ function main(workbook: ExcelScript.Workbook) {
     // 1. Set formulas in the header and first data row
     selectedSheet.getRange("G1:I2").setFormulas([
         ["Felmarginal", "Week", "Month"],
-        ["=D2/E2-1", "=WEEKNUM(C2)", "=MONTH(C2)"]
+        ["=IF(OR(D2=0, E2=0), 100%, D2/E2-1)", "=WEEKNUM(C2)", "=MONTH(C2)"]
     ]);
 
-    // 2. Auto fill formulas down to the last row dynamically
     selectedSheet.getRange("G2:I2").autoFill(`G2:I${lastRow}`, ExcelScript.AutoFillType.fillDefault);
-
-    // 3. Apply percentage formatting
     selectedSheet.getRange(`G2:G${lastRow}`).setNumberFormat("0.00%");
+
+    // Conditional Formatting to highlight entire row ($A$2:$I$lastRow) if $G = 100% ---
+    let targetRange = selectedSheet.getRange(`A2:I${lastRow}`);
+    targetRange.clearAllConditionalFormats();
+    let conditionalFormat = targetRange.addConditionalFormat(ExcelScript.ConditionalFormatType.custom);
+    let customRule = conditionalFormat.getCustom();
+
+    customRule.getFormat().getFill().setColor("#FF97A3");
+    customRule.getRule().setFormula("=$G2=100%");
 
     // 4. Extract unique months
     let monthValues = selectedSheet.getRange(`I2:I${lastRow}`).getValues();
@@ -42,13 +48,11 @@ function main(workbook: ExcelScript.Workbook) {
     // Sort months numerically
     uniqueMonths.sort((a, b) => Number(a) - Number(b));
 
-    // STEP A: Delete all existing Pivot Tables in the sheet first
+    // STEP A: Delete all existing Pivot Tables and column K entries
     let pivotTables = selectedSheet.getPivotTables();
     for (let pivot of pivotTables) {
         pivot.delete();
     }
-
-    // STEP B: Now safely clear Column K (headers and titles)
     selectedSheet.getRange("K:K").clear();
 
     // 5. Dynamically create and place Pivot Tables
@@ -71,12 +75,9 @@ function main(workbook: ExcelScript.Workbook) {
         let pivot = workbook.addPivotTable(tableName, sourceTableRange, destinationCell);
 
         // Configure Pivot Table layout
+        pivot.getLayout().setLayoutType(ExcelScript.PivotLayoutType.tabular);
         pivot.addRowHierarchy(pivot.getHierarchy("Namn"));
         pivot.addColumnHierarchy(pivot.getHierarchy("Week"));
-
-        // Set layout to Tabular form
-        pivot.getLayout().setLayoutType(ExcelScript.PivotLayoutType.tabular);
-
         pivot.addDataHierarchy(pivot.getHierarchy("Personec"));
         pivot.addDataHierarchy(pivot.getHierarchy("EAM"));
         pivot.addDataHierarchy(pivot.getHierarchy("Diff (P-E)"));
@@ -92,11 +93,9 @@ function main(workbook: ExcelScript.Workbook) {
             }
         });
 
-        // Dynamic Calculation: Read actual rendered height from layout
+        // Dynamic Calculation: Read actual rendered height from layout and advance start position
         let pivotRange = pivot.getLayout().getRange();
         let pivotRowCount = pivotRange.getRowCount();
-
-        // Advance start position
         currentStartRow = currentStartRow + 1 + pivotRowCount + blankSeparationRows;
     });
 }
