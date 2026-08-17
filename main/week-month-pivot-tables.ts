@@ -83,7 +83,6 @@ function main(workbook: ExcelScript.Workbook) {
 
         let felmarginalHierarchy = pivot.addDataHierarchy(pivot.getHierarchy("Felmarginal"));
         felmarginalHierarchy.setSummarizeBy(ExcelScript.AggregationFunction.average);
-        felmarginalHierarchy.setNumberFormat("0.00%");
 
         // Apply filter
         let monthFilter = pivot.addFilterHierarchy(pivot.getHierarchy("Month"));
